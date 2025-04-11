@@ -10,21 +10,28 @@ import SwiftUI
 struct ContentView: View {
     let emojis = ["👻", "🎃", "🕷️", "😈", "💀", "🕸️", "🧙", "🙀", "👹", "😱", "☠️", "🍭"]
     
-    @State var cardCount = 4
+    @State var cardCount = 12
     
     var body: some View {
+        gameTitle
         VStack {
             ScrollView {
                 cards
             }
             Spacer()
-            cardCountAdjusters
+            HStack {
+                vehiclesThemeButton
+                animalsThemeButton
+                foodThemeButton
+            }.font(.largeTitle)
         }
         .padding()
     }
     
+    var gameTitle = Text("Memorize!").font(.largeTitle)
+    
     var cards: some View {
-        LazyVGrid(columns: [GridItem(.adaptive(minimum: 120)), GridItem(.adaptive(minimum: 120))]) {
+        LazyVGrid(columns: [GridItem(.adaptive(minimum: 60)), GridItem(.adaptive(minimum: 60))]) {
             ForEach(0..<cardCount, id: \.self) { index in
                 CardView(content: emojis[index])
                     .aspectRatio(2/3, contentMode: .fit)
@@ -59,6 +66,25 @@ struct ContentView: View {
     var cardAdder: some View {
         cardCountAdjusters(by: +1, symbol: "rectangle.stack.fill.badge.plus")
     }
+    
+    func getThemeButton(themeName: String, symbol: String) -> some View {
+        Button(action: {}, label: {
+            VStack {
+                Image(systemName: symbol)
+                Text(themeName).font(.caption)
+            }
+        }).padding()
+    }
+    
+    var vehiclesThemeButton: some View {
+        getThemeButton(themeName: "Vehicles", symbol: "car")
+    }
+    var animalsThemeButton: some View {
+        getThemeButton(themeName: "Animals", symbol: "cat")
+    }
+    var foodThemeButton: some View {
+        getThemeButton(themeName: "Food", symbol: "carrot")
+    }
 }
 
 struct CardView: View {
@@ -72,7 +98,7 @@ struct CardView: View {
             Group {
                 base.foregroundStyle(.white)
                 base.strokeBorder(lineWidth: 2)
-                Text(content)
+                Text(content).font(.largeTitle)
             }
             .opacity(isFaceUp ? 1 : 0)
             base.fill().opacity(isFaceUp ? 0 : 1)
