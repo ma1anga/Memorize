@@ -12,17 +12,23 @@ struct EmojiMemoryGameView: View {
     
     var body: some View {
         VStack {
-            Text(viewModel.themeName)
-                .foregroundStyle(getColorByName(colorName: viewModel.themeColor))
+            HStack {
+                Text(viewModel.themeName)
+                Spacer()
+                Text("Score: \(viewModel.score)")
+            }
+                .padding()
             ScrollView {
                 cards
                     .animation(.default, value: viewModel.cards)
             }
-            Button("New game") {
+            Button("New Game") {
                 viewModel.startNewGame()
             }
+            .padding()
         }
         .padding()
+        .foregroundStyle(getColorByName(colorName: viewModel.themeColor))
     }
     
     var cards: some View {

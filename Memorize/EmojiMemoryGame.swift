@@ -60,6 +60,10 @@ class EmojiMemoryGame: ObservableObject {
         return theme.name
     }
     
+    var score: Int {
+        return model.score
+    }
+    
     // MARK: - Intents
     
     func shuffle() {
