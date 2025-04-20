@@ -12,12 +12,14 @@ struct EmojiMemoryGameView: View {
     
     var body: some View {
         VStack {
+            Text(viewModel.themeName)
+                .foregroundStyle(getColorByName(colorName: viewModel.themeColor))
             ScrollView {
                 cards
                     .animation(.default, value: viewModel.cards)
             }
-            Button("Shuffle") {
-                viewModel.shuffle()
+            Button("New game") {
+                viewModel.startNewGame()
             }
         }
         .padding()
@@ -34,7 +36,22 @@ struct EmojiMemoryGameView: View {
                     }
             }
         }
-        .foregroundStyle(.orange)
+        .foregroundStyle(getColorByName(colorName: viewModel.themeColor))
+    }
+    
+    private func getColorByName(colorName: String) -> Color {
+        switch colorName {
+        case "red":
+            return .red
+        case "green":
+            return .green
+        case "blue":
+            return .blue
+        case "orange":
+            return .orange
+        default:
+            return .gray
+        }
     }
 }
 
